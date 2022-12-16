@@ -23,13 +23,17 @@ class IOSseClient extends SseClient {
 
   IOSseClient(this.stream);
 
-  factory IOSseClient.connect(Uri uri) {
+  factory IOSseClient.connect(Uri uri, [Map<String, String>? headers]) {
     late StreamController<String?> incomingController;
     final client = ClientWithCustomExceptionType();
 
     incomingController = StreamController<String?>.broadcast(onListen: () {
       final request = Request('GET', uri)
         ..headers['Accept'] = 'text/event-stream';
+
+      if (headers != null) {
+        request.headers.addAll(headers);
+      }
 
       client.send(request).then((response) {
         if (response.statusCode == 200) {

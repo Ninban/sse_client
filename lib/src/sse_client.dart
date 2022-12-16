@@ -17,7 +17,8 @@ abstract class SseClient {
   ///
   /// Connects to [uri] using and returns a stream that can be used to
   /// sends events in `text/event-stream` format.
-  factory SseClient.connect(Uri uri) => platform.connect(uri);
+  factory SseClient.connect(Uri uri, [Map<String, String>? headers]) =>
+      platform.connect(uri, headers);
 
   Stream<String?> get stream;
   Stream<void> get errorEvents;
